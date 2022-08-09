@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
-        jDown = Input.GetButton("Jump");
+        jDown = Input.GetButtonDown("Jump");
     }
 
     void Move()
