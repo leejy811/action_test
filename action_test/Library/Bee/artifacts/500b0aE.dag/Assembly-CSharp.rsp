@@ -337,6 +337,7 @@
 -r:"Library/Bee/artifacts/500b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/QuarterView 3D Action BE5/ReadMe/Scripts/ReadmeBE5.cs"
 "Assets/Script/Follow.cs"
+"Assets/Script/item.cs"
 "Assets/Script/Player.cs"
 -langversion:9.0
 
