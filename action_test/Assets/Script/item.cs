@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class item : MonoBehaviour
+public class Item : MonoBehaviour
 {
     public enum Type { Ammo, Coin, Grenade, Heart, Weapon};
     public Type type;

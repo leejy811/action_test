@@ -8,22 +8,33 @@ public class Player : MonoBehaviour
     public float ratioOfRunWalk;
     public float jumpPower;
 
+    public GameObject[] Weapons;
+    public bool[] hasWeapons;
+    public bool[] sDown;
+
     float hAxis;
     float vAxis;
+
     bool wDown;
     bool jDown;
-
+    bool iDown;
     bool isDodge;
+    bool isSwap;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
 
     Rigidbody rigid;
     Animator anim;
+
+    GameObject nearObject;
+    GameObject equipWeapon;
+    int equipWeaponIndex = -1;
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+
     }
 
     void FixedUpdate()
@@ -33,6 +44,8 @@ public class Player : MonoBehaviour
         Turn();
         Jump();
         Dodge();
+        Interation();
+        Swap();
     }
 
     void GetInput()
@@ -41,6 +54,15 @@ public class Player : MonoBehaviour
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
+        iDown = Input.GetButtonDown("Interation");
+        sDown[0] = Input.GetButtonDown("swap1");
+        sDown[1] = Input.GetButtonDown("swap2");
+        sDown[2] = Input.GetButtonDown("swap3");
+    }
+
+    void GetSwapInput()
+    {
+        
     }
 
     void Move()
@@ -50,6 +72,8 @@ public class Player : MonoBehaviour
         if (isDodge)
             moveVec = dodgeVec;
 
+        if (isSwap)
+            moveVec = Vector3.zero;
         transform.position += moveVec * speed * (wDown ? ratioOfRunWalk : 1f) * Time.deltaTime;
 
         MoveAnim();
@@ -68,7 +92,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (jDown && !IsJump() && !isDodge && moveVec == Vector3.zero)
+        if (jDown && !IsJump() && !isDodge && moveVec == Vector3.zero && !isSwap)
         {
             rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             anim.SetBool("isJump", true);
@@ -83,7 +107,7 @@ public class Player : MonoBehaviour
 
     void Dodge()
     {
-        if (jDown && !IsJump() && !isDodge && moveVec != Vector3.zero)
+        if (jDown && !IsJump() && !isDodge && moveVec != Vector3.zero && !isSwap)
         {
             dodgeVec = moveVec;
             speed *= 2;
@@ -100,11 +124,69 @@ public class Player : MonoBehaviour
         isDodge = false;
     }
 
+    void Swap()
+    {
+        if (sDown[0] && (!hasWeapons[0] || equipWeaponIndex == 0))
+            return;
+        if (sDown[1] && (!hasWeapons[1] || equipWeaponIndex == 1))
+            return;
+        if (sDown[2] && (!hasWeapons[2] || equipWeaponIndex == 2))
+            return;
+
+        int weaponIndex = -1;
+
+        if (sDown[0]) weaponIndex = 0;
+        if (sDown[1]) weaponIndex = 1;
+        if (sDown[2]) weaponIndex = 2;
+
+        if ((sDown[0] || sDown[1] || sDown[2]) && !IsJump() && !isDodge)
+        {
+            if (equipWeapon != null)
+                equipWeapon.SetActive(false);
+            equipWeaponIndex = weaponIndex;
+            equipWeapon = Weapons[weaponIndex];
+            equipWeapon.SetActive(true);
+
+            anim.SetTrigger("doSwap");
+            isSwap = true;
+            Invoke("SwapOut", 0.4f);
+        }
+    }
+
+    void SwapOut()
+    {
+        isSwap = false;
+    }
+
+    void Interation()
+    {
+        if(iDown && nearObject != null && !IsJump() && !isDodge && !isSwap)
+        {
+            Item item = nearObject.GetComponent<Item>();
+            int WeaponIndex = item.value;
+            hasWeapons[WeaponIndex] = true;
+
+            Destroy(nearObject);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Floor")
         {
             anim.SetBool("isJump", false);
         }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Weapon")
+            nearObject = other.gameObject;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Weapon")
+            nearObject = null;
     }
 }
