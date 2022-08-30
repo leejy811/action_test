@@ -10,7 +10,18 @@ public class Player : MonoBehaviour
 
     public GameObject[] Weapons;
     public bool[] hasWeapons;
+    public GameObject[] grenades;
+    public int hasGrenades;
     public bool[] sDown;
+
+    public int ammo;
+    public int coin;
+    public int health;
+
+    public int maxAmmo;
+    public int maxCoin;
+    public int maxHealth;
+    public int maxHasGrenades;
 
     float hAxis;
     float vAxis;
@@ -176,6 +187,39 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isJump", false);
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Item")
+        {
+            Item item = other.GetComponent<Item>();
+            switch (item.type)
+            {
+                case Item.Type.Ammo:
+                    AssignItem(ref ammo, maxAmmo, item);
+                    break;
+                case Item.Type.Coin:
+                    AssignItem(ref coin, maxCoin, item);
+                    break;
+                case Item.Type.Heart:
+                    AssignItem(ref health, maxHealth, item);
+                    break;
+                case Item.Type.Grenade:
+                    grenades[hasGrenades].SetActive(true);
+                    AssignItem(ref hasGrenades, maxHasGrenades, item);
+                    break;
+            }
+
+            Destroy(other.gameObject);
+        }
+    }
+
+    void AssignItem(ref int hasItem, int maxHasItem, Item item)
+    {
+        hasItem += item.value;
+        if (hasItem > maxHasItem)
+            hasItem = maxHasItem;
     }
 
     void OnTriggerStay(Collider other)

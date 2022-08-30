@@ -4921,7 +4921,7 @@ GameObject:
   - component: {fileID: 8066462304595204411}
   m_Layer: 0
   m_Name: Weapon Grenade
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4998,7 +4998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4c5d65eab385547aa2a74e68ff8827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  type: 2
   value: 1
 --- !u!1 &7928021360221422615
 GameObject:
