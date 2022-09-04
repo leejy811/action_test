@@ -340,6 +340,7 @@
 -r:"Library/Bee/artifacts/500b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/QuarterView 3D Action BE5/ReadMe/Scripts/ReadmeBE5.cs"
 "Assets/Script/Bullet.cs"
+"Assets/Script/Enemy.cs"
 "Assets/Script/Follow.cs"
 "Assets/Script/Item.cs"
 "Assets/Script/Orbit.cs"
