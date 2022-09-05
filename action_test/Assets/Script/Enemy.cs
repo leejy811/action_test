@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
             curHealth -= weapon.damage;
 
             Vector3 reactVec = transform.position - other.transform.position;
-            StartCoroutine(OnDamage(reactVec));
+            StartCoroutine(OnDamage(reactVec, false));
         }
         else if(other.tag == "Bullet")
         {
@@ -35,11 +35,18 @@ public class Enemy : MonoBehaviour
 
             Vector3 reactVec = transform.position - other.transform.position;
             Destroy(other.gameObject);
-            StartCoroutine(OnDamage(reactVec));
+            StartCoroutine(OnDamage(reactVec, false));
         }
     }
 
-    IEnumerator OnDamage(Vector3 reactVec)
+    public void HitByGrenade(Vector3 explosionPos)
+    {
+        curHealth -= 100;
+        Vector3 reactVec = transform.position - explosionPos;
+        StartCoroutine(OnDamage(reactVec, true));
+    }
+
+    IEnumerator OnDamage(Vector3 reactVec, bool isGrenade)
     {
         mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -53,8 +60,19 @@ public class Enemy : MonoBehaviour
             mat.color = Color.gray;
             gameObject.layer = 12;
 
-            rigid.AddForce((reactVec.normalized + Vector3.up) * 5, ForceMode.Impulse);
-            Destroy(gameObject, 4f);
+            if (isGrenade)
+            {
+                rigid.freezeRotation = false;
+                float explosionPower = (reactVec.magnitude - 20) * -0.5f;
+                rigid.AddForce((reactVec.normalized + Vector3.up * 3) * explosionPower, ForceMode.Impulse);
+                rigid.AddTorque((reactVec.normalized + Vector3.up * 3) * explosionPower * 3f, ForceMode.Impulse);
+                Destroy(gameObject, 4f);
+            }
+            else
+            {
+                rigid.AddForce((reactVec.normalized + Vector3.up) * 5, ForceMode.Impulse);
+                Destroy(gameObject, 4f);
+            }
         }
     }
 }

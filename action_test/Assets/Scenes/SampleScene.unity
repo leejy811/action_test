@@ -904,6 +904,8 @@ MonoBehaviour:
   - {fileID: 453575183}
   - {fileID: 963614791}
   - {fileID: 267212741}
+  throwGrenade: {fileID: 804916980260030411, guid: f1998cd9a70afd845b6858ff324de769,
+    type: 3}
   hasGrenades: 0
   speed: 15
   ratioOfRunWalk: 0.3
@@ -6621,8 +6623,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f1f074d96b9e546b2715680da88c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  curHealth: 200
+  maxHealth: 100
+  curHealth: 100
 --- !u!54 &1410234774
 Rigidbody:
   m_ObjectHideFlags: 0

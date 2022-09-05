@@ -342,6 +342,7 @@
 "Assets/Script/Bullet.cs"
 "Assets/Script/Enemy.cs"
 "Assets/Script/Follow.cs"
+"Assets/Script/Grenade.cs"
 "Assets/Script/Item.cs"
 "Assets/Script/Orbit.cs"
 "Assets/Script/Player.cs"
