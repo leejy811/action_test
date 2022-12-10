@@ -53,6 +53,9 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (enemyType == Type.D)
+            Debug.Log("D");
+
         FreezeVelocity();
         Targeting();
     }
@@ -136,8 +139,9 @@ public class Enemy : MonoBehaviour
 
     void FreezeVelocity()
     {
-        if (isChase)
+        if (isChase || enemyType == Type.D)
         {
+            Debug.Log("Freeze");
             rigid.angularVelocity = Vector3.zero;
             rigid.velocity = Vector3.zero;
         }
