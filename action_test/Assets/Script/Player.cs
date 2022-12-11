@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     bool isFireReady = true;
     bool isBorder;
     bool isDamage;
+    bool isShop;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -152,7 +153,7 @@ public class Player : MonoBehaviour
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
 
-        if(fDown && isFireReady && !isDodge && !isSwap)
+        if(fDown && isFireReady && !isDodge && !isSwap && !isShop)
         {
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
@@ -165,7 +166,7 @@ public class Player : MonoBehaviour
         if (hasGrenades == 0)
             return;
 
-        if(gDown && !isReload && !isSwap)
+        if(gDown && !isReload && !isSwap && !isShop)
         {
             Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayHit;
@@ -190,7 +191,7 @@ public class Player : MonoBehaviour
         if (equipWeapon == null || equipWeapon.type == Weapon.Type.Melee || ammo == 0)
             return;
 
-        if(rDown && !isDodge && !isSwap && !IsJump() && isFireReady)
+        if(rDown && !isDodge && !isSwap && !IsJump() && isFireReady && !isShop)
         {
             anim.SetTrigger("doReload");
             isReload = true;
@@ -209,7 +210,7 @@ public class Player : MonoBehaviour
 
     void Dodge()
     {
-        if (jDown && !IsJump() && !isDodge && moveVec != Vector3.zero && !isSwap)
+        if (jDown && !IsJump() && !isDodge && moveVec != Vector3.zero && !isSwap && !isShop)
         {
             dodgeVec = moveVec;
             speed *= 2;
@@ -241,7 +242,7 @@ public class Player : MonoBehaviour
         if (sDown[1]) weaponIndex = 1;
         if (sDown[2]) weaponIndex = 2;
 
-        if ((sDown[0] || sDown[1] || sDown[2]) && !IsJump() && !isDodge)
+        if ((sDown[0] || sDown[1] || sDown[2]) && !IsJump() && !isDodge && !isShop)
         {
             if (equipWeapon != null)
                 equipWeapon.gameObject.SetActive(false);
@@ -264,11 +265,20 @@ public class Player : MonoBehaviour
     {
         if(iDown && nearObject != null && !IsJump() && !isDodge && !isSwap)
         {
-            Item item = nearObject.GetComponent<Item>();
-            int WeaponIndex = item.value;
-            hasWeapons[WeaponIndex] = true;
+            if (nearObject.tag == "Weapon")
+            {
+                Item item = nearObject.GetComponent<Item>();
+                int WeaponIndex = item.value;
+                hasWeapons[WeaponIndex] = true;
 
-            Destroy(nearObject);
+                Destroy(nearObject);
+            }
+            else if (nearObject.tag == "Shop")
+            {
+                Shop shop = nearObject.GetComponent<Shop>();
+                shop.Enter(this);
+                isShop = true;
+            }
         }
     }
 
@@ -369,7 +379,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Weapon")
+        if (other.tag == "Weapon" || other.tag == "Shop")
             nearObject = other.gameObject;
     }
 
@@ -377,5 +387,12 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Weapon")
             nearObject = null;
+        else if(other.tag == "Shop")
+        {
+            Shop shop = nearObject.GetComponent<Shop>();
+            shop.Exit();
+            isShop = false;
+            nearObject = null;
+        }
     }
 }
