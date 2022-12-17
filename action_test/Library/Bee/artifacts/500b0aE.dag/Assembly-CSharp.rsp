@@ -345,6 +345,7 @@
 "Assets/Script/Bullet.cs"
 "Assets/Script/Enemy.cs"
 "Assets/Script/Follow.cs"
+"Assets/Script/GameManager.cs"
 "Assets/Script/Grenade.cs"
 "Assets/Script/Item.cs"
 "Assets/Script/Missile.cs"
