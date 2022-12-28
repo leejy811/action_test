@@ -185,7 +185,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!95 &4693351901829994842
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -202,7 +202,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &4693351901839669887
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   isMelee: 1
+  isRock: 0
 --- !u!1 &4693351901889695501
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4693351902635396306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -660,11 +661,22 @@ MonoBehaviour:
   enemyType: 0
   maxHealth: 100
   curHealth: 100
+  score: 100
   target: {fileID: 0}
   meleeArea: {fileID: 4693351901864976042}
   bullet: {fileID: 0}
+  coins:
+  - {fileID: 8597683226439204550, guid: 20d7ff445291e3c4ea2ee097a68c9091, type: 3}
+  - {fileID: 7832193185018524263, guid: 6f50a405d5ef0b843bd14d643c991174, type: 3}
+  - {fileID: 8232948614468103528, guid: 13df35e15d0a97f4b9a8726dd5266b96, type: 3}
   isChase: 0
   isAttack: 0
+  isDead: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  meshs: []
+  nav: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1 &4693351902691298529
 GameObject:
   m_ObjectHideFlags: 0

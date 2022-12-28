@@ -11,9 +11,12 @@ public class Enemy : MonoBehaviour
     public Type enemyType;
     public int maxHealth;
     public int curHealth;
+    public int score;
+    public GameManager gameManager;
     public Transform target;
     public BoxCollider meleeArea;
     public GameObject bullet;
+    public GameObject[] coins;
     public bool isChase;
     public bool isAttack;
     public bool isDead;
@@ -149,7 +152,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Melee")
+        if(other.tag == "Melee" && !isDead)
         {
             Weapon weapon = other.GetComponent<Weapon>();
             curHealth -= weapon.damage;
@@ -157,7 +160,7 @@ public class Enemy : MonoBehaviour
             Vector3 reactVec = transform.position - other.transform.position;
             StartCoroutine(OnDamage(reactVec, false));
         }
-        else if(other.tag == "Bullet")
+        else if(other.tag == "Bullet" && !isDead)
         {
             Bullet bullet = other.GetComponent<Bullet>();
             curHealth -= bullet.damage;
@@ -194,10 +197,30 @@ public class Enemy : MonoBehaviour
 
             gameObject.layer = 12;
 
+            switch (enemyType)
+            {
+                case Type.A:
+                    gameManager.enemyCountA--;
+                    break;
+                case Type.B:
+                    gameManager.enemyCountB--;
+                    break;
+                case Type.C:
+                    gameManager.enemyCountC--;
+                    break;
+                case Type.D:
+                    gameManager.enemyCountD--;
+                    break;
+            }
+
             isDead = true;
             isChase = false;
             nav.enabled = false;
             anim.SetTrigger("doDie");
+            Player player = target.GetComponent<Player>();
+            player.score += score;
+            int ranCoin = Random.Range(0, 3);
+            Instantiate(coins[ranCoin], transform.position, Quaternion.identity);
 
             if (isGrenade)
             {
@@ -211,8 +234,7 @@ public class Enemy : MonoBehaviour
                 rigid.AddForce((reactVec.normalized + Vector3.up) * 5, ForceMode.Impulse);
             }
 
-            if (enemyType != Type.D)
-                Destroy(gameObject, 4f);
+            Destroy(gameObject, 4f);
         }
     }
 }

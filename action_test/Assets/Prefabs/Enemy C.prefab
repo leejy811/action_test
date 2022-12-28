@@ -80,11 +80,22 @@ MonoBehaviour:
   enemyType: 2
   maxHealth: 200
   curHealth: 200
+  score: 500
   target: {fileID: 0}
   meleeArea: {fileID: 0}
   bullet: {fileID: 3723724253442721798, guid: f8f1cd701ae29a6458e35efe52c1f24b, type: 3}
+  coins:
+  - {fileID: 8597683226439204550, guid: 20d7ff445291e3c4ea2ee097a68c9091, type: 3}
+  - {fileID: 7832193185018524263, guid: 6f50a405d5ef0b843bd14d643c991174, type: 3}
+  - {fileID: 8232948614468103528, guid: 13df35e15d0a97f4b9a8726dd5266b96, type: 3}
   isChase: 0
   isAttack: 0
+  isDead: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  meshs: []
+  nav: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!195 &2491316143308403896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -285,7 +296,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &2491316143588189281
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -302,4 +313,4 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0

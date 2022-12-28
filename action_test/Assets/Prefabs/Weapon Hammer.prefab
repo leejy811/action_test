@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3789705132127509760}
   - component: {fileID: 3789705132127509763}
   - component: {fileID: 3789705132127509762}
-  - component: {fileID: 3789705132127509774}
+  - component: {fileID: 4005848609193770234}
   m_Layer: 0
   m_Name: Weapon Hammer
   m_TagString: Weapon
@@ -80,7 +80,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3789705132127509774
+--- !u!114 &4005848609193770234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

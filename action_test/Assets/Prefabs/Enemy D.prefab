@@ -105,9 +105,14 @@ MonoBehaviour:
   enemyType: 3
   maxHealth: 100
   curHealth: 100
+  score: 2000
   target: {fileID: 0}
   meleeArea: {fileID: 7187504380315261299}
   bullet: {fileID: 9104217395508562538, guid: f8b305af5e0cfe44fae7f3a5b265533d, type: 3}
+  coins:
+  - {fileID: 8597683226439204550, guid: 20d7ff445291e3c4ea2ee097a68c9091, type: 3}
+  - {fileID: 7832193185018524263, guid: 6f50a405d5ef0b843bd14d643c991174, type: 3}
+  - {fileID: 8232948614468103528, guid: 13df35e15d0a97f4b9a8726dd5266b96, type: 3}
   isChase: 0
   isAttack: 0
   isDead: 0
@@ -430,7 +435,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &7187504381237105952
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -447,7 +452,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!4 &6676985915338894640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a43df65176acc724e8d74ed0d0e8986a,
